@@ -1,0 +1,23 @@
+<main>
+  <div class="mt-40 text-center text-success">
+    <h1>
+      <i class="far fa-check-circle"></i> Payment Successful!
+    </h1>
+    <p class="lead mt-20">
+      Thank you for your purchase from Stripe Press.
+    </p>
+    <div class="mt-40 text-center text-info">
+  <p><strong>Book Title:</strong> {{title}}</p>
+ <p><strong>Amount Paid:</strong> ${{amount_display}}</p>
+
+  <p><strong>Stripe Payment Intent ID:</strong> {{payment_intent}}</p>
+</div>
+
+  </div>
+  <div class="mt-40 text-center text-secondary">
+    <p>
+      A confirmation email has been sent to your inbox.
+    </p>
+    <a href="/" class="btn btn-outline-primary mt-20">Back to Store</a>
+  </div>
+</main>

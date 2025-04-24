@@ -1,0 +1,100 @@
+<div class="row justify-content-md-center">
+  <div class="col-6">
+    <div class="text-center mt-40">
+      <h1>Checkout — Stripe Press</h1>
+      <h5 class="text-secondary">{{title}}</h5>
+      <hr class="mt-40">
+      <div class="mt-20 text-info">
+        Total due: $<span class="amount" data-amount="{{amount}}"></span>
+      </div>
+    </div>
+    <div class="card box-shadow mt-40">
+      <div class="card-body">
+        <form name="payment-form">
+          <div>
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="you@email.com">
+          </div>
+          <div id="payment-element" class="mt-20"></div>
+          <div id="payment-message" class="text-danger mt-20" style="display:none;"></div>
+          <div class="mt-20">
+            <button type="submit" class="btn btn-lg btn-block btn-primary">Pay $<span class="amount" data-amount="{{amount}}"></span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stripe = Stripe("{{STRIPE_PUBLISHABLE_KEY}}");
+  const amount = document.querySelector('.amount').dataset.amount;
+  const form = document.querySelector('form');
+  let elements;
+
+  // 显示金额（格式化为美元）
+  document.addEventListener("DOMContentLoaded", function () {
+    const amountSpans = document.querySelectorAll(".amount");
+    amountSpans.forEach((span) => {
+      const cents = parseInt(span.dataset.amount, 10);
+      if (!isNaN(cents)) {
+        const dollars = (cents / 100).toFixed(2);
+        span.textContent = dollars;
+      }
+    });
+  });
+
+  // 初始化支付表单
+  async function initialize() {
+    const emailInput = document.getElementById("email");
+
+    // Step 1：向服务器请求创建 PaymentIntent
+    const response = await fetch("/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: parseInt(amount),
+        email: emailInput.value || "guest@example.com",
+        title: "{{title}}"
+      })
+    });
+
+    const data = await response.json();
+
+    // Step 2：获取 clientSecret 和 paymentIntentId
+    const clientSecret = data.clientSecret;
+    const paymentIntentId = data.paymentIntentId;
+
+    if (!clientSecret || !paymentIntentId) {
+      alert("Failed to create payment intent. Please check your server.");
+      return;
+    }
+
+    // Step 3：配置 Stripe Elements
+    const appearance = { theme: 'stripe' };
+    elements = stripe.elements({ appearance, clientSecret });
+    const paymentElement = elements.create("payment");
+    paymentElement.mount("#payment-element");
+
+    // Step 4：绑定支付提交按钮
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/success?title=${encodeURIComponent("{{title}}")}&amount=${amount}&payment_intent=${paymentIntentId}`
+        }
+      });
+
+      if (error) {
+        const msgEl = document.getElementById("payment-message");
+        msgEl.textContent = error.message;
+        msgEl.style.display = "block";
+      }
+    });
+  }
+
+  // Step 5：页面加载后初始化
+  window.addEventListener("load", initialize);
+</script>

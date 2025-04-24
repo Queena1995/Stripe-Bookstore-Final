@@ -1,0 +1,14 @@
+.text-success h1 {
+  font-size: 3rem;
+  color: #28a745;
+}
+
+.lead {
+  font-size: 1.5rem;
+}
+
+.btn-outline-primary {
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+}
