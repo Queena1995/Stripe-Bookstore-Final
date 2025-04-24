@@ -104,7 +104,7 @@ The architecture of the solution is included as a separate file.
 
 Despite having no prior programming experience, I set out to complete this solution independently.
 
-- **Initial Learning Curve:** I did not even know how to run code in VS Code. To overcome this, I scheduled a 1 houe Teams call with a friend (CS student at NUS) who guided me through VS Code basics.
+- **Initial Learning Curve:** I did not even know how to run code in VS Code. To overcome this, I scheduled a 1 hour Teams call with a friend (CS student at NUS) who guided me through VS Code basics.
 - **Self-Learning:** I explored [Stripe Docs](https://docs.stripe.com)（https://docs.stripe.com/payments/elements）(https://docs.stripe.com/api/payment_intents/create), followed Architect tutorials on Stripe Training like Getting started with Stripe & Product Fundamentals, and used AI to help interpret errors and implement adjustments.
 - **Outcome:** Within 4–5 hours, I built a fully functional Stripe-enabled application.
 
