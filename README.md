@@ -20,8 +20,8 @@ To simplify this project, we're also not using any database here, either. Instea
 
 ### 1. Clone the Repository and Install Dependencies
 ```bash
-git clone https://github.com/yourname/stripe-bookstore.git
-cd stripe-bookstore
+git clone https://github.com/yourname/stripe-bookstore-final.git
+cd stripe-bookstore-final
 npm install
 ```
 
