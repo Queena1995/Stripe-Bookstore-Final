@@ -75,7 +75,7 @@ To simulate payments during development, you may use:
 
 - Card Number: `4000 0000 0000 9995` to simulate insufficient balance in the card;
 - Card Number: `4000 0027 6000 3184` to trigger the 3D Secure process;
-- Card Number: `4000 0000 0000 0069` tto simulate expired cards;
+- Card Number: `4000 0000 0000 0069` to simulate expired cards;
 
 ---
 
